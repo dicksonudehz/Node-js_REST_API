@@ -1,7 +1,7 @@
 import Issue from "../models/issueModel.js";
 
 // Create a new issue complaint
-// this is the deal of pushing all my files to the github 
+// this is the deal of pushing all my files to the github we are still add this please 
 
 const createIssue  = async(req, res) => {
     try{
