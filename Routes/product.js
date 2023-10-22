@@ -52,7 +52,7 @@ router.get('/:id', getProductId);
 
 //categories
 
-// router.get('/:category', getCategories)
+router.get('/specific/:all-category', getCategories)
 
 //updateAProduct
 

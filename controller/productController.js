@@ -137,14 +137,14 @@ const getProductId = async (req, res) => {
 //       res.status(400).json({ message: 'Failed to fetch products by category' });
 //     }
 //   };
-
+ 
 const getCategories =  async (req, res) => {
-    const categories = req.params.category
     try {
-        const products = await Product.find( categories );
+        const category = req.params.category
+        const products = await Product.find( category );
       res.json({message: "category fetched", products})
     } catch (error) {
-      res.status(400).json({ message: 'Failed to fetch products by category' });
+      res.status(400).json({ message: 'Failed to fetch products by category' })
     }
   }
 
