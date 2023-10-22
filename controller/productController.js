@@ -184,7 +184,7 @@ const getDiscountedProduct = async(req, res) => {
 
             const discountedProducts = await Product.find({ discount: { $gt: 0 } });
             if(discountedProducts.length > 0) {
-            res.json({ message: "Discounted products found", discountedProducts });
+            res.json({ message: "Discounted products found", discountedProducts })
             } else {
             res.json({ message: "No discounted products found" });
             }
@@ -302,7 +302,7 @@ const getProductReview = async(req, res) => {
         if (!product) {
           res.status(400).json({ message: "Product not found" });
         } else {
-          const reviews = product.reviews;
+          const reviews = product.review[0];
           res.json({ message: "Product reviews found", reviews });
         }
     }catch(err){
