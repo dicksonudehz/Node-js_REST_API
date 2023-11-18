@@ -15,9 +15,9 @@ const router = express.Router()
 
 router.post('/', protect, admin, createProduct);
 
-// get all protect 
+// get all product 
 
-router.get('/', getAllProduct);
+router.get('/', getAllProduct)
 
 //topSales
 router.get('/top-sales', topSales)
@@ -27,14 +27,14 @@ router.get('/top-six-products', getTopSixProducts)
 
 router.get('/top-six-new-products', getTopSixNewProducts)
 
-router.get('/new', getNewProduct);
+router.get('/new', getNewProduct)
 
 //new Products
 router.get("/featured", getFeaturedProducts)
 
 //best seller
 
-router.get('/best', bestSellerProduct);
+router.get('/best', bestSellerProduct)
 
 
 
