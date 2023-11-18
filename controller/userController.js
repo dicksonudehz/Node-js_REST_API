@@ -84,6 +84,7 @@ const login = async (req, res) => {
       } else {
         res.status(400).json({ message: "unable to login", status:false});
       }
+      
     } else {
       res.status(400).json({ message: "user not find", status: false});
     }
