@@ -13,7 +13,9 @@ const router = express.Router()
 
 //createProduct (Admin alone)
 
-router.post('/', protect, admin, createProduct);
+router.post('/', createProduct);
+
+// protect, admin,
 
 // get all product 
 
@@ -35,8 +37,6 @@ router.get("/featured", getFeaturedProducts)
 //best seller
 
 router.get('/best', bestSellerProduct)
-
-
 
 //get discount product
 

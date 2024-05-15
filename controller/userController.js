@@ -31,6 +31,7 @@ const sendMail = async (req, res) => {
     res.status(500).json({ error: "Failed to send email" });
   }
 };
+
 const register = async (req, res) => {
   try {
     const { name, email, password, address } = req.body;
@@ -59,9 +60,10 @@ const register = async (req, res) => {
 
 // get a single user
 const getAUser = async (req, res) => {
+  const userId = req.query.userId;
   try {
-    const singleUser = await User.findOne({ email });
-    if (singleUser) {
+    const user = await User.findById(userId)
+    if (user) {
       res.json({ message: "user found", singleUser });
     } else {
       res.status(400).json({ Message: "User cannot be found" })
