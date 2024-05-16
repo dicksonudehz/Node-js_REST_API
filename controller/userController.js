@@ -44,7 +44,7 @@ const register = async (req, res) => {
         email,
         password: bcrypt.hashSync(password, 10),
         address,
-        token: generateToken(user._id),
+        token
       });
       const saveUser = await newUser.save();
       if (saveUser) {
@@ -58,22 +58,20 @@ const register = async (req, res) => {
   }
 };
 
-
 // get a single user
 const getAUser = async (req, res) => {
   const userId = req.query.userId;
   try {
-    const user = await User.findById(userId)
+    const user = await User.findById(userId);
     if (user) {
       res.json({ message: "user found", singleUser });
     } else {
-      res.status(400).json({ Message: "User cannot be found" })
+      res.status(400).json({ Message: "User cannot be found" });
     }
   } catch (error) {
-    throw new Error(error)
+    throw new Error(error);
   }
 };
-
 
 const login = async (req, res) => {
   try {
@@ -85,11 +83,10 @@ const login = async (req, res) => {
         const token = generateToken(user._id);
         res.json({ message: "login successful", token, user, status: true });
       } else {
-        res.status(400).json({ message: "unable to login", status:false});
+        res.status(400).json({ message: "unable to login", status: false });
       }
-      
     } else {
-      res.status(400).json({ message: "user not find", status: false});
+      res.status(400).json({ message: "user not find", status: false });
     }
   } catch (err) {
     throw new Error(err);
