@@ -1,49 +1,55 @@
-import jwt from 'jsonwebtoken'
-import User from '../models/userModel.js'
-import Admin from '../models/adminModel.js'
+import jwt from "jsonwebtoken";
+import User from "../models/userModel.js";
+import Admin from "../models/adminModel.js";
 
-const protect = (async (req, res, next) => {
-    let token
-    if (
-        req.headers.authorization &&
-        req.headers.authorization.startsWith('Bearer')
-    ) {
-        try {
-        token = req.headers.authorization.split(' ')[1]
+const generateToken = (id) => {
+  return jwt.sign({ id }, process.env.JWT_SECRET, {
+    expiresIn: "30d", // Adjust the expiration time as needed
+  });
+};
 
-        const decoded = jwt.verify(token, process.env.JWT_SECRET)
-        req.user = await User.findById(decoded.id).select('-password')
-        req.admin = await Admin.findById(decoded.id).select('-password')
+const protect = async (req, res, next) => {
+  let token;
+  if (
+    req.headers.authorization &&
+    req.headers.authorization.startsWith("Bearer")
+  ) {
+    try {
+      token = req.headers.authorization.split(" ")[1];
 
-        next()
-        } catch (error) {
-        console.error(error)
-        res.status(401)
-        throw new Error('Not authorized, token failed')
-        }
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      req.user = await User.findById(decoded.id).select("-password");
+      req.admin = await Admin.findById(decoded.id).select("-password");
+
+      next();
+    } catch (error) {
+      console.error(error);
+      res.status(401);
+      throw new Error("Not authorized, token failed");
     }
-    if (!token) {
-        res.status(401)
-        throw new Error('Not authorized, no token')
-    }
-})
+  }
+  if (!token) {
+    res.status(401);
+    throw new Error("Not authorized, no token");
+  }
+};
 
 const admin = (req, res, next) => {
-    if (req.admin) {
-        next()
-    } else {
-        res.status(401)
-        throw new Error('Not authorized as an admin')
-    }
-}
+  if (req.admin) {
+    next();
+  } else {
+    res.status(401);
+    throw new Error("Not authorized as an admin");
+  }
+};
 
 const user = (req, res, next) => {
-    if (req.user) {
-        next()
-    } else {
-        res.status(401)
-        throw new Error('Not authorized as an user')
-    }
-}
+  if (req.user) {
+    next();
+  } else {
+    res.status(401);
+    throw new Error("Not authorized as an user");
+  }
+};
 
-export { protect, admin, user}
+export { protect, admin, user, generateToken };
