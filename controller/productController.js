@@ -8,7 +8,7 @@ const createProduct = async (req, res) => {
       return res.status(400).json({ error: 'All fields are required' });
     }
     
-    const newProduct = await new Product({
+    const newProduct = await Product.create({
       name,
       price,
       category,
@@ -16,6 +16,7 @@ const createProduct = async (req, res) => {
       description,
       quantity,
     });
+    
     const saveProduct = await newProduct.save();
     if (saveProduct) {
       res.json({ message: "product created successfully", saveProduct });
