@@ -44,6 +44,7 @@ const register = async (req, res) => {
         email,
         password: bcrypt.hashSync(password, 10),
         address,
+        token: generateToken(user._id),
       });
       const saveUser = await newUser.save();
       if (saveUser) {

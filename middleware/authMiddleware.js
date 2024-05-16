@@ -4,7 +4,7 @@ import Admin from "../models/adminModel.js";
 
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
-    expiresIn: "30d", // Adjust the expiration time as needed
+    expiresIn: "30d", 
   });
 };
 
