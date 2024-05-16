@@ -33,28 +33,33 @@ const sendMail = async (req, res) => {
 };
 
 const register = async (req, res) => {
-  try {
-    const { name, email, password, address } = req.body;
-    const userExist = await User.findOne({ email: email });
-    if (userExist) {
-      res.status(400).json({ message: "user already exist" });
-    } else {
-      const newUser = await new User({
-        name,
-        email,
-        password: bcrypt.hashSync(password, 10),
-        address,
-        token
-      });
-      const saveUser = await newUser.save();
-      if (saveUser) {
-        res.json({ message: " registration successful", saveUser });
-      } else {
-        res.status(400).json({ message: "registration failed" });
-      }
-    }
-  } catch (err) {
-    throw new Error(err);
+  const { name, email, password, address } = req.body;
+
+  const userExists = await User.findOne({ email });
+
+  if (userExists) {
+    res.status(400);
+    throw new Error("User already exists");
+  }
+
+  const user = await User.create({
+    name,
+    email,
+    password,
+    address,
+  });
+
+  if (user) {
+    res.status(201).json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      address: user.address,
+      token: generateToken(user._id),
+    });
+  } else {
+    res.status(400);
+    throw new Error("Invalid user data");
   }
 };
 
