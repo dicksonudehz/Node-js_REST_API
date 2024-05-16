@@ -9,15 +9,12 @@ import adminRoute from "./Routes/admin.js";
 import issueRoute from "./Routes/issue.js";
 import orderRoute from "./Routes/order.js";
 
+
 dotenv.config();
-
 connectDB().then();
-
 const app = express();
-
-app.use(express.json());
 app.use(cors());
-
+app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.get("/", (req, res) => {
