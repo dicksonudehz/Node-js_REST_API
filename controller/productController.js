@@ -1,8 +1,13 @@
 import Product from "../models/productModel.js";
 
 const createProduct = async (req, res) => {
-  const { name, price, category, image, description, quantity } = req.body;
+ 
   try {
+    const { name, price, category, image, description, quantity } = req.body;
+    if (!name || !price || !category || !description || !quantity) {
+      return res.status(400).json({ error: 'All fields are required' });
+    }
+    
     const newProduct = await new Product({
       name,
       price,
